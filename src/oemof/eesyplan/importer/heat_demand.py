@@ -14,6 +14,8 @@ def import_heat_demand_f_heat(path, network=None):
     if network is None:
         network = select_value(list(networks.keys()))
 
-    return pd.read_excel(
+    df = pd.read_excel(
         networks[network], sheet_name="Lastprofil", index_col=[0]
     )["Gesamtsumme"]
+    temp_path.cleanup()
+    return df
