@@ -3,8 +3,6 @@ import zipfile
 from tkinter import Tk
 from tkinter import ttk
 
-import requests
-
 
 def unzip_package(zip_path):
     """
