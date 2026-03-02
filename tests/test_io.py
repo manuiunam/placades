@@ -1,4 +1,4 @@
-import os
+# import os
 import tempfile
 import zipfile
 from pathlib import Path
@@ -10,8 +10,6 @@ import pytest
 
 from oemof.eesyplan.io import select_value
 from oemof.eesyplan.io import unzip_package
-
-# Import the functions to test
 
 
 class TestUnzipPackage:
@@ -50,7 +48,7 @@ class TestUnzipPackage:
 
         try:
             # Verify the temporary directory exists
-            assert os.path.exists(temp_dir.name)
+            assert Path(temp_dir.name).exists()
 
             # Verify files were extracted
             extracted_file1 = Path(temp_dir.name) / "file1.txt"
@@ -81,16 +79,15 @@ class TestUnzipPackage:
     def test_unzip_package_cleanup(self, sample_zip):
         """Test that cleanup removes the temporary directory."""
         temp_dir = unzip_package(sample_zip)
-        temp_path = temp_dir.name
 
         # Verify directory exists
-        assert os.path.exists(temp_path)
+        assert Path(temp_dir.name).exists()
 
         # Cleanup
         temp_dir.cleanup()
 
         # Verify directory is removed
-        assert not os.path.exists(temp_path)
+        assert not Path(temp_dir.name).exists()
 
     def test_unzip_package_nonexistent_file(self):
         """Test with a non-existent zip file."""
@@ -107,7 +104,7 @@ class TestUnzipPackage:
             with pytest.raises(zipfile.BadZipFile):
                 unzip_package(invalid_zip)
         finally:
-            os.unlink(invalid_zip)
+            Path(invalid_zip).unlink()
 
     def test_unzip_empty_zip(self):
         """Test with an empty zip file."""
@@ -122,12 +119,12 @@ class TestUnzipPackage:
             temp_dir = unzip_package(empty_zip)
             try:
                 # Should succeed but extract no files
-                assert os.path.exists(temp_dir.name)
-                assert len(os.listdir(temp_dir.name)) == 0
+                assert Path(temp_dir.name).exists()
+                assert not any(Path(temp_dir.name).iterdir())
             finally:
                 temp_dir.cleanup()
         finally:
-            os.unlink(empty_zip)
+            Path(empty_zip).unlink()
 
 
 class TestSelectValue:
@@ -148,9 +145,7 @@ class TestSelectValue:
             # Simulate user selecting an option
             callback(None)  # Trigger the on_select callback
 
-        with patch(
-            "oemof.eesyplan.io.ttk.Combobox", return_value=mock_combo
-        ) as mock_combobox:
+        with patch("oemof.eesyplan.io.ttk.Combobox", return_value=mock_combo):
             mock_combo.bind.side_effect = bind_side_effect
 
             result = select_value(["Option 1", "Option 2", "Option 3"])
@@ -180,7 +175,7 @@ class TestSelectValue:
         mock_combo = MagicMock()
 
         with patch("oemof.eesyplan.io.ttk.Combobox", return_value=mock_combo):
-            with patch("oemof.eesyplan.io.ttk.Label") as mock_label:
+            with patch("oemof.eesyplan.io.ttk.Label"):
                 select_value(["Option 1"])
 
                 # Verify window properties

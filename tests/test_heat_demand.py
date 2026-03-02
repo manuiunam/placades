@@ -4,8 +4,8 @@ from pathlib import Path
 from shutil import rmtree
 from unittest.mock import patch
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pytest
 
 from oemof.eesyplan.importer import heat_demand as heat
