@@ -9,7 +9,6 @@ from oemof.eesyplan import export_results
 from oemof.eesyplan import import_results
 from oemof.eesyplan.model import optimise
 from oemof.network import graph
-from oemof.solph import EnergySystem
 from oemof.tools.debugging import ExperimentalFeatureWarning
 from oemof.tools.logger import define_logging
 from oemof.visio import ESGraphRenderer

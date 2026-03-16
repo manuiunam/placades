@@ -13,6 +13,7 @@ class EnergySystem(SolphES):
         interval=1,
         number=None,
         start=None,
+        **kwargs,
     ):
         """
         Create an energy system with a datetime index for one year.
@@ -56,13 +57,24 @@ class EnergySystem(SolphES):
         11
         >>> str(EnergySystem(2014, interval=0.5, number=10).timeindex[-1])
         '2014-01-01 05:00:00'
-        >>> str(EnergySystem(2014, interval=2, number=10).timeindex[-1])
+        >>> es = EnergySystem(2014, interval=2, number=10)
+        >>> str(es.timeindex[-1])
+        '2014-01-01 20:00:00'
+        >>> str(EnergySystem(timeindex=es.timeindex).timeindex[-1])
         '2014-01-01 20:00:00'
         """
-        time_index = create_time_index(
-            year=year, interval=interval, number=number, start=start
+        if kwargs.get("timeindex", None) is None:
+            timeindex = create_time_index(
+                year=year, interval=interval, number=number, start=start
+            )
+        else:
+            timeindex = kwargs.get("timeindex")
+
+        super().__init__(
+            timeindex=timeindex,
+            infer_last_interval=False,
+            periods=kwargs.get("periods"),
         )
-        super().__init__(timeindex=time_index, infer_last_interval=False)
 
 
 def optimise(energy_system, solver="cbc", debug=False):
