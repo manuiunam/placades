@@ -1,22 +1,17 @@
 import logging
-from pathlib import Path
-
-from oemof.eesyplan import export_results
-from oemof.eesyplan import import_results
-from oemof.network import graph
-from oemof.solph import Model
-from oemof.solph import Results
-from oemof.tools.logger import define_logging
 import warnings
 from pathlib import Path
 
 from oemof.datapackage import datapackage  # noqa
-from oemof.eesyplan import EnergySystem
-from oemof.eesyplan.model import optimise
 from oemof.eesyplan import TYPEMAP
+from oemof.eesyplan import EnergySystem
+from oemof.eesyplan import export_results
+from oemof.eesyplan import import_results
+from oemof.eesyplan.model import optimise
 from oemof.network import graph
 from oemof.solph import EnergySystem
 from oemof.tools.debugging import ExperimentalFeatureWarning
+from oemof.tools.logger import define_logging
 from oemof.visio import ESGraphRenderer
 
 warnings.filterwarnings("ignore", category=ExperimentalFeatureWarning)

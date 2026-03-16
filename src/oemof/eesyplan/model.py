@@ -1,8 +1,8 @@
 import logging
 
+from oemof.solph import EnergySystem as SolphES
 from oemof.solph import Model
 from oemof.solph import Results
-from oemof.solph import EnergySystem as SolphES
 from oemof.solph import create_time_index
 
 
