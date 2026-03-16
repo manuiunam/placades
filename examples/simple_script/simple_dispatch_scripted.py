@@ -1,15 +1,13 @@
 from pathlib import Path
 
-import pandas as pd
-
 from oemof.eesyplan import CarrierBus
 from oemof.eesyplan import Demand
 from oemof.eesyplan import DsoElectricity
 from oemof.eesyplan import ElectricalStorage
+from oemof.eesyplan import EnergySystem
 from oemof.eesyplan import Project
 from oemof.eesyplan import PvPlant
 from oemof.eesyplan import WindTurbine
-from oemof.eesyplan import EnergySystem
 from oemof.eesyplan import optimise
 
 DATA_PATH = Path("data")
@@ -52,11 +50,6 @@ def process_results(results):
 def simple_script():
     # Read data file
     project = Project(name="test", lifetime=20, tax=0, discount_factor=0)
-
-    data = {}
-    for key, fn in DATA_FILES.items():
-        path = Path(DATA_PATH, fn)
-        data[key] = pd.read_csv(path, header=None).squeeze()
 
     # ####################### initialize the energy system ####################
     energy_system = EnergySystem(2023)
@@ -132,5 +125,4 @@ def simple_script():
 
 
 if __name__ == "__main__":
-    results = simple_script()
-    process_results(results)
+    process_results(simple_script())
