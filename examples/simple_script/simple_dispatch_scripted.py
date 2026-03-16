@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pandas as pd
+
 from oemof.eesyplan import CarrierBus
 from oemof.eesyplan import Demand
 from oemof.eesyplan import DsoElectricity
@@ -49,6 +51,11 @@ def process_results(results):
 
 def simple_script():
     # Read data file
+    data = {}
+    for key, fn in DATA_FILES.items():
+        path = Path(DATA_PATH, fn)
+        data[key] = pd.read_csv(path, header=None).squeeze()
+
     project = Project(name="test", lifetime=20, tax=0, discount_factor=0)
 
     # ####################### initialize the energy system ####################
