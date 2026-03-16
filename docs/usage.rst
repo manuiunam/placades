@@ -74,12 +74,11 @@ to connect components. An overview of all components can be found at
     energy_system.add(elec_demand)
 
 
-Finally, all defined components have to be added to the energy system to
-create the system graph. Afterwards, the energy system can be optimised.
+
+Afterwards, the energy system can be optimised.
 
 .. code-block:: python
 
-    energy_system.add(bus_elec, dso, elec_demand)
     results = optimise(energy_system)
 
 An advanced result handling will be part of eesyplan. Until this is
