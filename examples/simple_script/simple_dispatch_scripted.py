@@ -11,6 +11,8 @@ from oemof.eesyplan import Project
 from oemof.eesyplan import PvPlant
 from oemof.eesyplan import WindTurbine
 from oemof.eesyplan import optimise
+from oemof.eesyplan.postprocessing.node_balance import balance
+from oemof.tools.logger import define_logging
 
 DATA_PATH = Path("data")
 
@@ -20,33 +22,6 @@ DATA_FILES = {
     "wind": Path("wind_profile.csv"),
     "demand_elec": Path("electricity_demand.csv"),
 }
-
-
-def process_results(results):
-    rdf = results["flow"]
-
-    for n, m in [(0, 1), (1, 0)]:
-        rdf.rename(
-            columns={
-                c[n]: c[n].label[-1]
-                for c in rdf.columns
-                if isinstance(c[n].label, tuple)
-                and not isinstance(c[m].label, tuple)
-            },
-            level=n,
-            inplace=True,
-        )
-    elec_in = rdf[[c for c in rdf.columns if c[0] == "electricity"]]
-    elec_out = rdf[[c for c in rdf.columns if c[1] == "electricity"]]
-    print(elec_in.sum())
-    print(elec_out.sum())
-    print("*****************")
-    print("Input:", round(elec_in.sum().sum()))
-    print("Output:", round(elec_out.sum().sum()))
-    if "invest" in results:
-        print("Invest:", results["invest"])
-
-    print("Objective:", results["objective"])
 
 
 def simple_script():
@@ -132,4 +107,5 @@ def simple_script():
 
 
 if __name__ == "__main__":
-    process_results(simple_script())
+    define_logging()
+    print(balance(simple_script()).sum().sort_index())

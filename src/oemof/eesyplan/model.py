@@ -2,7 +2,7 @@ import logging
 
 from oemof.solph import EnergySystem as SolphES
 from oemof.solph import Model
-from oemof.solph import Results
+from oemof.solph import Results as SolphResults
 from oemof.solph import create_time_index
 
 
@@ -75,6 +75,11 @@ class EnergySystem(SolphES):
             infer_last_interval=False,
             periods=kwargs.get("periods"),
         )
+
+
+class Results(SolphResults):
+    def __init__(self, optimization_model):
+        super().__init__(optimization_model)
 
 
 def optimise(energy_system, solver="cbc", debug=False):

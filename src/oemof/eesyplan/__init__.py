@@ -40,6 +40,7 @@ from oemof.eesyplan.facades.storages.FuelStorage import FuelStorage
 from oemof.eesyplan.facades.storages.HydrogenStorage import HydrogenStorage
 from oemof.eesyplan.facades.storages.ThermalStorage import ThermalStorage
 from oemof.eesyplan.model import EnergySystem
+from oemof.eesyplan.model import Results
 from oemof.eesyplan.model import optimise
 from oemof.eesyplan.project import Project
 from oemof.eesyplan.typemap import TYPEMAP
@@ -73,6 +74,7 @@ __all__ = [
     "HydrogenStorage",
     "Project",
     "PvPlant",
+    "Results",
     "Shortage",
     "SolarThermalPlant",
     "ThermalStorage",
