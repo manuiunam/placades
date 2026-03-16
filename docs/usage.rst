@@ -30,7 +30,8 @@ time systems can be found in the class description :py:class:`EnergySystem`
 
 Now the components of the energy system can be defined. Buses can be used
 to connect components. An overview of all components can be found at
-:ref:`my-reference-label
+:ref:`eesyplan-reference-label`.
+
 
 .. code-block:: python
 

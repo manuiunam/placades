@@ -1,13 +1,15 @@
+.. _eesyplan-reference-label:
+
 oemof-eesyPlan
 ==============
+
+
 
 .. testsetup::
 
     from oemof import eesyplan
 
 .. include:: docstring_parameter_description.rst
-
-.. _my-reference-label:
 
 .. automodule:: oemof.eesyplan
     :members:
