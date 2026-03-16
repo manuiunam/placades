@@ -20,7 +20,8 @@ parameters in case of an investment optimisation.
 The energy system is the container for the system graph. It contains the
 time index of the model. In case of an hourly resolved optimisation over a
 year, only the year needs to be specified. Further details on deviating
-time systems can be found in the class description :py:class:`EnergySystem`
+time systems can be found in the class description
+:py:class:`~.model.EnergySystem`
 
 .. code-block:: python
 
