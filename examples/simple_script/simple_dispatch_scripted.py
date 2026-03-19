@@ -108,4 +108,4 @@ def simple_script():
 
 if __name__ == "__main__":
     define_logging()
-    print(balance(simple_script()).sum().sort_index())
+    print(balance(simple_script()["flow"]).sum().sort_index())
