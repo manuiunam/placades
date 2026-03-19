@@ -7,8 +7,6 @@ import zipfile
 from pathlib import Path
 from tkinter import filedialog
 
-import pandas as pd
-
 from oemof.datapackage import datapackage  # noqa
 from oemof.eesyplan import TYPEMAP
 from oemof.eesyplan import export_results
