@@ -9,7 +9,7 @@ from oemof.tools.debugging import ExperimentalFeatureWarning
 warnings.filterwarnings("ignore", category=ExperimentalFeatureWarning)
 
 
-def balance(flows):
+def nodes_io(flows):
     """
     Create an i/o-balance around every node.
 
