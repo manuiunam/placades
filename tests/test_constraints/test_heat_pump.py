@@ -8,12 +8,15 @@ from oemof.solph import Bus
 
 
 def test_heat_pump_dispatch():
+    # init
     number = 10
     es = EnergySystem(2023, number=number)
     el_bus = Bus(label="electricity", balanced=False)
     ambient_bus = Bus(label="ambient", balanced=False)
     heat_bus = Bus(label="heat", balanced=False)
     es.add(el_bus, ambient_bus, heat_bus)
+
+    # Dispatch HeatPump
     heat_pump = HeatPump(
         name="air_source_heat_pump",
         bus_in_electricity=el_bus,
@@ -33,8 +36,10 @@ def test_heat_pump_dispatch():
     results = optimise(es)
     flows = results["flow"]
 
+    # Expected heat energy
     energy = heat_pump.installed_capacity * number
 
+    # Electricity input multiplied with cop equals expected heat energy
     assert (
         round(
             (
@@ -46,7 +51,10 @@ def test_heat_pump_dispatch():
         == energy
     )
 
+    # Heat pump output equals expected heat energy
     assert flows["air_source_heat_pump"].sum().iloc[0] == energy
+
+    # Electricity input plus ambient input equals expected heat energy
     assert (
         round((flows["electricity"].sum() + flows["ambient"].sum()).iloc[0], 5)
         == energy
@@ -83,6 +91,7 @@ def test_heat_pump_investment():
     es.add(heat_pump)
     results = optimise(es)
 
+    # !!!!!! CHECK THE VALUE !!!!!!
     # Check annuity
     annuity = 83.123
     assert (
@@ -97,13 +106,15 @@ def test_heat_pump_investment():
         == annuity
     )
 
-    # check objective
+    # Check total objective
     assert round(results["objective"], 3) == -1401.877
 
     flows = results["flow"]
 
+    # Expected heat energy
     energy = results["invest"].squeeze() * number
 
+    # Electricity input multiplied with cop equals expected heat energy
     assert (
         round(
             (
@@ -115,7 +126,10 @@ def test_heat_pump_investment():
         == energy
     )
 
+    # Heat pump output equals expected heat energy
     assert flows["air_source_heat_pump"].sum().iloc[0] == energy
+
+    # Electricity input plus ambient input equals expected heat energy
     assert (
         round((flows["electricity"].sum() + flows["ambient"].sum()).iloc[0], 5)
         == energy
