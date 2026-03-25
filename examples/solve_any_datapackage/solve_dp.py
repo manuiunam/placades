@@ -11,7 +11,7 @@ from oemof.datapackage import datapackage  # noqa
 from oemof.eesyplan import TYPEMAP
 from oemof.eesyplan import export_results
 from oemof.eesyplan import import_results
-from oemof.eesyplan.postprocessing import node_balance
+from oemof.eesyplan.postprocessing import balance
 from oemof.network import graph
 from oemof.solph import EnergySystem
 from oemof.solph import Model
@@ -120,12 +120,12 @@ def main(path=None, plot="graph"):
     else:
         es = create_energy_system_from_dp(path, plot=plot)
     results = optimise(es)
-    print(node_balance.balance(results["flow"]))
+    print(balance.nodes_io(results["flow"]))
     results_path = Path(Path.home(), "openplan", "openPlan_results")
     results_path.mkdir(parents=True, exist_ok=True)
     export_results(results, path=results_path)
     imported_results = import_results(path=results_path, es=es)
-    print(node_balance.balance(imported_results["flow"]))
+    print(balance.nodes_io(imported_results["flow"]))
 
 
 if __name__ == "__main__":
