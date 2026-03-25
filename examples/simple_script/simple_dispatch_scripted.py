@@ -11,7 +11,7 @@ from oemof.eesyplan import Project
 from oemof.eesyplan import PvPlant
 from oemof.eesyplan import WindTurbine
 from oemof.eesyplan import optimise
-from oemof.eesyplan.postprocessing.node_balance import balance
+from oemof.eesyplan.postprocessing.balance import nodes_io
 from oemof.tools.logger import define_logging
 
 DATA_PATH = Path("data")
@@ -108,4 +108,4 @@ def simple_script():
 
 if __name__ == "__main__":
     define_logging()
-    print(balance(simple_script()["flow"]).sum().sort_index())
+    print(nodes_io(simple_script()["flow"]).sum().sort_index())
